@@ -27,7 +27,20 @@ spec:
         image: sumanth17121988/memoryissue:1
         env:
         - name: JAVA_OPTS
-          value: "-Xmx512m -Xms512m -XX:+HeapDumpOnOutOfMemoryError -XX:HeapDumpPath=/heapdumps -XX:+ExitOnOutOfMemoryError"
+          value: >
+            -Xmx512m -Xms512m
+            -XX:+HeapDumpOnOutOfMemoryError
+            -XX:HeapDumpPath=/heapdumps
+            -XX:+ExitOnOutOfMemoryError
+            -Djavax.management.builder.initial=
+            -Dcom.sun.management.jmxremote
+            -Dcom.sun.management.jmxremote.host=34.44.234.65
+            -Dcom.sun.management.jmxremote.port=4044
+            -Dcom.sun.management.jmxremote.rmi.port=4046
+            -Djava.rmi.server.hostname=34.44.234.65
+            -Dcom.sun.management.jmxremote.local.only=false
+            -Dcom.sun.management.jmxremote.authenticate=false
+            -Dcom.sun.management.jmxremote.ssl=false
         volumeMounts:
         - mountPath: /heapdumps
           name: heapdumps-volume
@@ -38,6 +51,9 @@ spec:
           requests:
             memory: "512Mi"
             cpu: "500m"
+        ports:
+        - containerPort: 4044  # JMX RMI Port
+        - containerPort: 4046  # JMX RMI communication port
       volumes:
       - name: heapdumps-volume
         hostPath:

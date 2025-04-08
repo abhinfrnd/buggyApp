@@ -28,9 +28,16 @@ spec:
               memory: 512Mi
       - env:
          - name: JAVA_TOOL_OPTIONS
-            value: "-Dcom.sun.management.jmxremote -Dcom.sun.management.jmxremote.port=3001 
-                        -Dcom.sun.management.jmxremote.rmi.port=3001
-                        -Dcom.sun.management.jmxremote.authenticate=false 
-                        -Dcom.sun.management.jmxremote.ssl=false 
-                        -Dcom.sun.management.jmxremote.local.only=false 
-                        -Djava.rmi.server.hostname=<NODE_NAME>"
+            value: "-Xmx512m -Xms512m
+            -XX:+HeapDumpOnOutOfMemoryError
+            -XX:HeapDumpPath=/heapdumps
+            -XX:+ExitOnOutOfMemoryError
+            -Djavax.management.builder.initial=
+            -Dcom.sun.management.jmxremote
+            -Dcom.sun.management.jmxremote.host=34.44.234.65
+            -Dcom.sun.management.jmxremote.port=4044
+            -Dcom.sun.management.jmxremote.rmi.port=4046
+            -Djava.rmi.server.hostname=34.44.234.65
+            -Dcom.sun.management.jmxremote.local.only=false
+            -Dcom.sun.management.jmxremote.authenticate=false
+            -Dcom.sun.management.jmxremote.ssl=false
